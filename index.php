@@ -1,5 +1,6 @@
 <?php // トップページ=状態(login or logout) 登録、変更　　回答、作成
 require_once('DB.php');
+require_once('util.php');
 
 //   セッション危険？ログイン時の認証が成功した段階でセッションIDを再発行する。
 session_start();
@@ -8,11 +9,16 @@ if (isset($_POST['logout'])) {
     unset($_SESSION['login']);
 }
 
-// ログイン時のデータベース判定
+// ログインできるかデータベースに問い合わせ
 if (isset($_POST['mail']) && isset($_POST['password'])) {
     $db = new DB();
-    if ($db->hasUser($_POST['mail'], $_POST['password'])) {
-        $_SESSION['login'] = 'login';
+    // 文字コード、特殊文字をチェック
+    if (myCken($_POST)) {
+        $_POST = myEscap($_POST);
+
+        if ($db->hasUser($_POST['mail'], $_POST['password'])) {
+            $_SESSION['login'] = 'login';
+        }
     }
 }
 ?>
@@ -23,6 +29,8 @@ if (isset($_POST['mail']) && isset($_POST['password'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>クイズ！</title>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 
 <body>
@@ -73,6 +81,8 @@ if (isset($_POST['mail']) && isset($_POST['password'])) {
         }
         ?>
     </div>
+    <button class="btn-primary">boot</button>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

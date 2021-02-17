@@ -2,10 +2,14 @@
 session_start();
 $_SESSION['login'] = 'login';
 require_once("DB.php");
+require_once("util.php");
 
 $db = new DB();
-$data = $db->insertUser($_POST);
-
+// htmlからのpostを信用しない
+if (myCken($_POST)) {
+    $_POST = myEscap($_POST);
+    $data = $db->insertUser($_POST);
+}
 ?>
 
 <!DOCTYPE html>

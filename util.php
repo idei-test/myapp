@@ -21,7 +21,7 @@ function myCken(array $data){
             $value = implode("",$value);
         }
         // 要素ごとにコードチェックする 
-        if(!mb_check_encoding($value)){
+        if(!mb_check_encoding($value,"utf-8")){
             // 要素の一つでも文字コードが異なるならアウト
             $result = false;
         break;
@@ -29,5 +29,3 @@ function myCken(array $data){
     }
     return $result;
 }
-
-?>
