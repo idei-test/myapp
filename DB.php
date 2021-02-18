@@ -20,7 +20,7 @@ class DB
         $stmt->bindValue(2, $data['password']);
         $stmt->bindValue(3, $data['mail']);
         $stmt->execute();
-        $db = NULL;
+        $this->db = NULL;
     }
     // bool 指定のユーザーはいるか
     public function hasUser(string $mail, string $pass)
@@ -31,7 +31,7 @@ class DB
         $stmt->bindValue(1, $mail);
         $stmt->bindValue(2, $pass);
         $stmt->execute();
-        $db = NULL;
+        $this->db = NULL;
         if ($stmt->fetchAll(PDO::FETCH_ASSOC)) {
             return true;
         }
@@ -46,7 +46,7 @@ class DB
         $stmt->bindValue(1, $mail);
         $stmt->bindValue(2, $pass);
         $stmt->execute();
-        $db = NULL;
+        $this->db = NULL;
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -58,7 +58,7 @@ class DB
             "SELECT title,quiz_id FROM quiz_data"
         );
         $stmt->execute();
-        $db = NULL;
+        $this->db = NULL;
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // idを指定して　クイズを検索
@@ -69,7 +69,7 @@ class DB
         );
         $stmt->bindValue(1, $number);
         $stmt->execute();
-        $db = NULL;
+        $this->db = NULL;
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
