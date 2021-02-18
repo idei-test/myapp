@@ -1,14 +1,19 @@
 <?php
 session_start();
 $_SESSION['login'] = 'login';
-require_once("DB.php");
+require_once("model\\DB.php");
 require_once("util.php");
 
-$db = new DB();
 // htmlからのpostを信用しない
 if (myCken($_POST)) {
     $_POST = myEscap($_POST);
-    $data = $db->insertUser($_POST);
+    // 文字チェック
+    if (my_reg_match_ofEmail($_POST['mail'])) {
+        $db = new DB();
+        $data = $db->insertUser($_POST);
+    } else {
+        echo "失敗"; // 今度分岐をしっかり書く
+    }
 }
 ?>
 
@@ -18,14 +23,14 @@ if (myCken($_POST)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登録確認</title>
+    <title>登録完了</title>
 </head>
 
 <body>
-    <p>登録内容</p>
+    <p>登録しました　</p>
     <div>
         <?php
-        foreach ($data[0] as $k => $val) {
+        foreach ($data as $k => $val) {
             if ($k == 'id') {
                 continue;
             }
@@ -34,7 +39,7 @@ if (myCken($_POST)) {
         ?>
         <a href="index.php">マイページへ</a>
     </div>
-
+    <!-- 登録失敗時 -->
 </body>
 
 </html>

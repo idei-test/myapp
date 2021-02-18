@@ -1,6 +1,7 @@
 <?php // トップページ=状態(login or logout) 登録、変更　　回答、作成
-require_once('DB.php');
+require_once('model\\DB.php');
 require_once('util.php');
+
 
 //   セッション危険？ログイン時の認証が成功した段階でセッションIDを再発行する。
 session_start();
@@ -41,14 +42,14 @@ if (isset($_POST['mail']) && isset($_POST['password'])) {
             <input type="submit" name="logout" value="ログアウト">
         </form>
         <!-- 問題作成 -->
-        <form action=""><input type="submit" value="クイズ作成"></form>
+        <form action="createQuiz.php"><input type="submit" value="クイズ作成"></form>
         <!-- ユーザー情報変更 -->
         <form action=""><input type="submit" value="アカウント情報変更"></form>
 
     <?php else : ?>
         <p>トップページ</p>
         <!-- 新規登録　registationへ -->
-        <form action="registation.php">
+        <form action="regist\registation.php">
             <input type="submit" value="新規登録">
         </form>
         <!-- ログインフォーム -->
@@ -69,8 +70,7 @@ if (isset($_POST['mail']) && isset($_POST['password'])) {
         $qdb = new DB();
         $quiz_array = $qdb->getQuizTitle();
 
-        // test
-        var_dump($quiz_array);
+
 
         // jsで記述してajaxで返却してほしい
         foreach ($quiz_array as $q) {

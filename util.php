@@ -2,30 +2,37 @@
 // このファイルから提供される関数はセキュリティに必要
 
 // クロスサイトスクリプティング対策＝渡された引数をエスケープ
-function myEscap($data,  String $charset ="utf-8"){
+function myEscap($data,  String $charset = "utf-8")
+{
     // 配列なら各要素に対して、この関数を再帰して実行
-    if(is_array($data)){
-        return array_map(__METHOD__,$data);
-    // 要素自体ならエスケープさせる 
-    }else{
-        return htmlspecialchars($data,ENT_QUOTES,$charset);
+    if (is_array($data)) {
+        return array_map(__METHOD__, $data);
+        // 要素自体ならエスケープさせる 
+    } else {
+        return htmlspecialchars($data, ENT_QUOTES, $charset);
     }
 }
 //---------------------------------------------------------------------------
 // 文字コードをチェック　boolで判定返す
-function myCken(array $data){
+function myCken(array $data)
+{
     $result = true;
     // 各配列の要素内が配列なら連結する
-    foreach($data as $key => $value){
-        if(is_array($value)){
-            $value = implode("",$value);
+    foreach ($data as $key => $value) {
+        if (is_array($value)) {
+            $value = implode("", $value);
         }
         // 要素ごとにコードチェックする 
-        if(!mb_check_encoding($value,"utf-8")){
+        if (!mb_check_encoding($value, "utf-8")) {
             // 要素の一つでも文字コードが異なるならアウト
             $result = false;
-        break;
+            break;
         }
     }
     return $result;
+}
+
+function my_reg_match_ofEmail($target)
+{
+    return preg_match('/^[a-z0-9._%+-]+@[a-z0-9]+\.[a-z]{2,3}$/', $target);
 }

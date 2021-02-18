@@ -42,7 +42,7 @@ session_start();
 
         </form>
 
-        <form action="index.php"><input type="submit" value="トップページに戻る"></form>
+        <form action="..\index.php"><input type="submit" value="トップページに戻る"></form>
 
     <?php else : ?>
         <!-- 変更　パスワードを答えさせる -->

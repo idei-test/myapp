@@ -1,7 +1,7 @@
 <?php
 // このクラスのなかにpdoクラスを所持させる
 // 外部にたいしてデータベースにアクセスしやすいメソッド提供する
-// mvcのモデルクラスもどきをめざす
+// バリデーションしない
 class DB
 {
     private  $db;
@@ -13,6 +13,7 @@ class DB
     // 新しくユーザー追加
     public function insertUser(array $data)
     {
+        //$data['mail']がデーターベースにあるかチェックする処理追加予定
         $stmt = $this->db->prepare(
             "INSERT INTO quiz_user(name,password,email)values(?,?,?)"
         );
@@ -21,6 +22,7 @@ class DB
         $stmt->bindValue(3, $data['mail']);
         $stmt->execute();
         $this->db = NULL;
+        return $data;
     }
     // bool 指定のユーザーはいるか
     public function hasUser(string $mail, string $pass)
